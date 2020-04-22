@@ -5,5 +5,79 @@
   "main": "index.js",
   "repository": "git@github.com:isaacpovey/ts-backend-boilerplate",
   "author": "Isaac Povey",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "bootstrap": "yarn install --pure-lockfile",
+    "node-run": "node",
+    "node-run-dev": "TS_NODE_FILES=true yarn node-run -r ts-node/register",
+    "test-dev": "jest --watch",
+    "test": "yarn tslint-tests && jest -ci --runInBand --reporters=default --reporters=jest-junit --coverage",
+    "clean": "rm -rf dist",
+    "compile": "yarn clean && yarn tslint && tsc",
+    "start": "yarn compile && yarn node-run dist/index",
+    "dev": "nodemon --watch src -e ts,js -x 'yarn node-run-dev' src/index.ts",
+    "tslint": "tslint -c tslint.json -t stylish --project tsconfig.json",
+    "tslint-tests": "tslint -c 'tslint.json' -t stylish --project test/tsconfig.json",
+    "format": "yarn tslint --fix && yarn tslint-tests --fix",
+    "make-validator": "typescript-json-schema tsconfig.json"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./test/tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testRegex": "test/.*.spec.ts$",
+    "collectCoverageFrom": [
+      "src/**/*.ts"
+    ],
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js"
+    ],
+    "clearMocks": true
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "dotenv": "^8.2.0",
+    "kcors": "^2.2.2",
+    "koa": "^2.11.0",
+    "koa-bodyparser": "^4.3.0",
+    "koa-compose": "^4.1.0",
+    "koa-json-error": "^3.1.2",
+    "koa-jwt": "^3.6.0",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^8.0.8",
+    "lodash": "^4.17.15",
+    "ms": "^2.1.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/kcors": "^2.2.3",
+    "@types/koa": "^2.11.3",
+    "@types/koa-bodyparser": "^4.3.0",
+    "@types/koa-compose": "^3.2.5",
+    "@types/koa-json-error": "^3.1.2",
+    "@types/koa-logger": "^3.1.1",
+    "@types/koa-router": "^7.4.0",
+    "@types/lodash": "^4.14.150",
+    "@types/ms": "^0.7.31",
+    "@types/node": "^13.13.2",
+    "jest": "^25.4.0",
+    "jest-junit": "^10.0.0",
+    "nodemon": "^2.0.3",
+    "ts-jest": "^25.4.0",
+    "ts-node": "^8.9.0",
+    "tslint": "^6.1.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.8.3",
+    "typescript-json-schema": "^0.42.0"
+  }
 }

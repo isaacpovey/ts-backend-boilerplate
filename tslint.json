@@ -1,0 +1,43 @@
+{
+  "extends": [
+    "tslint:latest"
+  ],
+  "defaultSeverity": "warn",
+  "rules": {
+    "ordered-imports": [false],
+    "arrow-parens": [false],
+    "array-type":[false],
+    "max-classes-per-file": false,
+    "align": [true, "parameters", "statements"],
+    "semicolon": [true, "never"],
+    "quotemark": [true, "single"],
+    "max-line-length": [true, {"limit": 120, "ignore-pattern": "`*`"}],
+    "whitespace": [true, "check-branch", "check-operator", "check-typecast", "check-decl", "check-separator", "check-rest-spread"],
+    "no-angle-bracket-type-assertion": true,
+    "object-literal-sort-keys": false,
+    "indent": [true, "spaces", 2],
+    "class-name": false,
+    "eofline": true,
+    "no-string-literal": true,
+    "triple-equals": true,
+    "no-unused-expression": false,
+    "no-var-requires": false,
+    "no-console": [true, "log"],
+    "no-empty": true,
+    "no-empty-interface": [false],
+    "interface-name": [false, "never-prefix"],
+    "member-access": false,
+    "member-ordering": false,
+    "trailing-comma": [false, {"multiline": "never", "singleline": "never"}],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
+    "interface-over-type-literal": [false],
+    "no-irregular-whitespace": [true],
+    "no-trailing-whitespace": [true],
+    "array-bracket-spacing": [true, "never"],
+    "object-curly-spacing": [true, "always"],
+    "no-multi-spaces": [true]
+  },
+  "rulesDirectory": [
+    "node_modules/tslint-eslint-rules/dist/rules"
+  ]
+}
