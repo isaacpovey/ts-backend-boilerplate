@@ -1,0 +1,9 @@
+{
+  "name": "ts-backend-boilerplate",
+  "version": "1.0.0",
+  "description": "Ts koa backend service boilerplate",
+  "main": "index.js",
+  "repository": "git@github.com:isaacpovey/ts-backend-boilerplate",
+  "author": "Isaac Povey",
+  "license": "MIT"
+}
