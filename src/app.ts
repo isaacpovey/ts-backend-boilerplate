@@ -1,9 +1,12 @@
 import * as KCors from 'kcors'
 import * as Koa from 'koa'
 import * as KLogger from 'koa-logger'
+import { errorLogger } from './loggers'
 import { setLoggedRoutes, unLoggedRoutes } from './routes'
 import * as http from 'http'
 import { env } from './env'
+import { accessLogMiddleware } from './routes/middleware/accessLog'
+import { KoaPrometheusMiddleware } from './services/MetricsService'
 import ms = require('ms')
 
 const app = new Koa()
@@ -11,13 +14,15 @@ const app = new Koa()
 app.use(KCors({ credentials: true }))
 
 if (process.env.NODE_ENV === 'production') {
+  console.error = errorLogger(console.error)
   app.use(unLoggedRoutes)
-  app.use(KLogger()) // Don't log unlogged routes in production
+  app.use(accessLogMiddleware) // Don't log unlogged routes in production
 } else {
   app.use(KLogger())
   app.use(unLoggedRoutes)
 }
 
+app.use(KoaPrometheusMiddleware)
 
 setLoggedRoutes(app)
 
@@ -28,7 +33,6 @@ server.listen(env.PORT, '0.0.0.0', () => {
 })
 
 function safeProcessExit(exitCode = 0) {
-
   const closeTimeout = ms('30s')
 
   server.close(() => process.exit(exitCode))
@@ -44,7 +48,7 @@ function uncaughtExceptionHandler(e: Error) {
   safeProcessExit(1)
 }
 
-function unhandledRejectionHandler(reason: {} | null | undefined) {
+function unhandledRejectionHandler(reason: object | null | undefined) {
   console.error(reason)
   safeProcessExit(1)
 }

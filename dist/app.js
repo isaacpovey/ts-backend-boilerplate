@@ -3,20 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const KCors = require("kcors");
 const Koa = require("koa");
 const KLogger = require("koa-logger");
+const loggers_1 = require("./loggers");
 const routes_1 = require("./routes");
 const http = require("http");
 const env_1 = require("./env");
+const accessLog_1 = require("./routes/middleware/accessLog");
+const MetricsService_1 = require("./services/MetricsService");
 const ms = require("ms");
 const app = new Koa();
 app.use(KCors({ credentials: true }));
 if (process.env.NODE_ENV === 'production') {
+    console.error = loggers_1.errorLogger(console.error);
     app.use(routes_1.unLoggedRoutes);
-    app.use(KLogger()); // Don't log unlogged routes in production
+    app.use(accessLog_1.accessLogMiddleware); // Don't log unlogged routes in production
 }
 else {
     app.use(KLogger());
     app.use(routes_1.unLoggedRoutes);
 }
+app.use(MetricsService_1.KoaPrometheusMiddleware);
 routes_1.setLoggedRoutes(app);
 const server = http.createServer(app.callback());
 server.listen(env_1.env.PORT, '0.0.0.0', () => {

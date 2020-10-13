@@ -1,2 +1,8 @@
 node_modules
 .idea/
+coverage
+junit.xml
+yarn-error.log
+.env
+.DS_Store
+.vscode/
