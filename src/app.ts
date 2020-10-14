@@ -1,6 +1,7 @@
 import * as KCors from 'kcors'
 import * as Koa from 'koa'
 import * as KLogger from 'koa-logger'
+import * as KBodyParser from 'koa-bodyparser'
 import { errorLogger } from './loggers'
 import { setLoggedRoutes, unLoggedRoutes } from './routes'
 import * as http from 'http'
@@ -11,6 +12,7 @@ import ms = require('ms')
 
 const app = new Koa()
 
+app.use(KBodyParser())
 app.use(KCors({ credentials: true }))
 
 if (process.env.NODE_ENV === 'production') {
