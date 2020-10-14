@@ -1,4 +1,4 @@
-FROM node:12.19.0-alpine3.12 as builder
+FROM node:12.19.0-alpine3.11 as builder
 WORKDIR /app
 
 RUN apk update && apk upgrade
@@ -11,7 +11,7 @@ COPY ./src/ ./src
 
 RUN yarn compile
 
-FROM node:12.19.0-alpine3.12
+FROM node:12.19.0-alpine3.11
 
 ENV NODE_ENV=production
 
