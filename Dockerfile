@@ -1,6 +1,8 @@
 FROM node:12.19.0-alpine3.12 as builder
 WORKDIR /app
 
+RUN apk update && apk upgrade
+
 COPY package.json yarn.lock tsconfig.json ./
 
 RUN yarn run bootstrap
@@ -16,6 +18,8 @@ ENV NODE_ENV=production
 EXPOSE 9009
 
 WORKDIR /app
+
+RUN apk update && apk upgrade
 
 RUN adduser -u 1004 -D -h /ts-runner ts-runner
 
